@@ -8,7 +8,7 @@ Built using npm scripts: without tasks runner (gulp, grunt) or module bundler (w
 
 Most common commands are:
 
-* **`npm install`** For installing needed dependecies 
+* **`npm install --silent`** For installing needed dependencies 
 
 * **`npm start`** For developing (watches for changes)
 
