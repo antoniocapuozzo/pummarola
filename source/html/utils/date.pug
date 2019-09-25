@@ -1,0 +1,10 @@
+//- Date mixin.
+//- @author Antonio Capuozzo
+//- Usage: +date('1986-09-21')
+
+mixin date(input)
+  
+  - var date = new Date(input)
+  - var months = [ 'January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December' ]
+
+  time(datetime=JSON.parse(JSON.stringify(date)))&attributes(attributes)=months[date.getMonth()] + ' ' + date.getDate() + ', ' + date.getFullYear()

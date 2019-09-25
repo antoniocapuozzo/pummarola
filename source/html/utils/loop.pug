@@ -1,0 +1,13 @@
+//- Loop (object) mixin.
+//- @author Antonio Capuozzo
+//- Usage: +loop(5)
+
+mixin loop(count)
+
+  - var n = 0
+
+  while n < count
+
+    block
+
+    - n++

@@ -1,0 +1,11 @@
+//- Placeholder mixin.
+//- @author Antonio Capuozzo
+//- Usage: +placeholder(200, 120)
+
+mixin placeholder(width, height)
+  
+  - var count = Math.round(Math.random() * 1000) + 1 
+  
+  figure
+    img(src='https://picsum.photos/' +width + '/' + height + '/?random&' + count, width= +width, height= +height alt='', loading='lazy')
+    
