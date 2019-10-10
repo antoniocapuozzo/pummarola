@@ -73,6 +73,7 @@ $ git clone https://github.com/antoniocapuozzo/pummarola.git && cd pummarola
     │   │   └─── placeholder.pug
     │
     ├───script
+    │   └─── utils.js
     │   └─── app.js 
     │
     ├───style
