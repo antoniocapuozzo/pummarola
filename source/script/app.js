@@ -1,3 +1,3 @@
-import Test from './test'
+import Util from './utils'
 
-Test.init();
+console.dir(Util);
