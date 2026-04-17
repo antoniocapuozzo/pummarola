@@ -1,0 +1,11 @@
+/*
+// ----------------------------------
+// 🍅 Pummarola Mixins
+// ----------------------------------
+*/
+
+@mixin --grid-container() {
+  max-width: var(--grid-container);
+  margin-inline: auto;
+  padding-inline: var(--grid-gap);
+}

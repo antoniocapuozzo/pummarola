@@ -1,0 +1,22 @@
+/*
+// ----------------------------------
+// 🍅 Pummarola Block Section
+// ----------------------------------
+*/
+
+.block-section {
+  padding-block: var(--space-lg);
+
+  @media (--mq-laptop) {
+    padding-block: var(--space-xl);
+  }
+
+  @media (--mq-desktop) {
+    padding-block: var(--space-xxl);
+  }
+
+}
+
+.block-section-title {
+  margin-bottom: var(--space-lg);
+}

@@ -1,0 +1,19 @@
+include ../utils/date
+include ../utils/loop
+include ../utils/ipsum
+include ../utils/placeholder
+include ../components/button
+include ../sections/block
+
+doctype html
+html(lang='en')
+  head
+    meta(charset='utf-8')
+    meta(name='viewport' content='width=device-width, initial-scale=1.0')
+    block title
+      title Pummarola | Tomato-first frontend boilerplate
+    link(rel='stylesheet' href='/source/styles/app.css')
+  body(itemscope='' itemtype='http://schema.org/WebPage')
+    block content
+    block script
+      script(type='module' src='/source/scripts/app.ts')
