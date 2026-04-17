@@ -1,0 +1,123 @@
+/*
+// ----------------------------------
+// 🍅 Pummarola Reset
+// ----------------------------------
+*/
+
+* {
+  box-sizing: border-box;
+}
+
+*:before,
+*:after {
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  -ms-text-size-adjust: 100%;
+  -webkit-text-size-adjust: 100%;
+  -webkit-tap-highlight-color: rgba(0, 0, 0, 0.004%);
+  scroll-behavior: smooth;
+  scrollbar-gutter: stable;
+  -moz-osx-font-smoothing: grayscale;
+  -webkit-font-smoothing: antialiased;
+  -webkit-text-size-adjust: none;
+  -moz-text-size-adjust: none;
+  -ms-text-size-adjust: none;
+  text-size-adjust: none;
+  text-rendering: optimizeLegibility;
+  text-rendering: geometricPrecision;
+}
+
+body {
+  font-family: var(--font-body);
+  margin: 0;
+  -moz-osx-font-smoothing: grayscale;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+  text-size-adjust: none;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p,
+blockquote,
+figure,
+figcaption,
+ol,
+ul {
+  margin: 0;
+  padding: 0;
+}
+
+ul,
+ol {
+  list-style-type: none;
+}
+
+fieldset,
+input,
+select,
+textarea {
+  border: none;
+  box-shadow: none;
+  appearance: none;
+  margin: 0;
+  padding: 0;
+}
+
+table,
+caption,
+tbody,
+tfoot,
+thead,
+tr,
+th,
+td {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  font-size: 100%;
+  font: inherit;
+  vertical-align: baseline;
+}
+
+table,
+tbody,
+tfoot,
+thead,
+tr,
+th {
+  width: 100%;
+}
+
+table {
+  display: block;
+  border-collapse: collapse;
+  border-spacing: 0;
+}
+
+img {
+  border: none;
+}
+
+img,
+video {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+details {
+  list-style: none;
+}
+
+details > summary {
+  all: unset;
+  cursor: pointer;
+}

@@ -1,0 +1,66 @@
+/*
+// ----------------------------------
+// 🍅 Pummarola Tokens
+// ----------------------------------
+*/
+
+:root {
+
+  /* Space (gap, margin, padding) */
+  --space-2xs: 2px;
+  --space-xs: 8px;
+  --space-sm: 12px;
+  --space-base: 16px;
+  --space-lg: 24px;
+  --space-xl: 32px;
+  --space-xxl: 48px;
+
+  /* Radius */
+  --raduys-2xs: 2px;
+  --raduys-xs: 8px;
+  --raduys-sm: 12px;
+  --raduys-base: 16px;
+  --raduys-lg: 24px;
+  --raduys-xl: 32px;
+  --radius-circle: 50%;
+  --radius-pill: 100px;
+
+  /* Stroke (border-width) */
+  --stroke-1: 1px;
+  --stroke-2: 2px;
+  --stroke-3: 3px;
+
+  /* Typography (font-family, font-weight, line-height, letter-spacing) */
+  --font-body: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Helvetica Neue', sans-serif;
+
+  /* Typography (font-size) */
+  --text-2xs: 12px;
+  --text-xs: 14px;
+  --text-sm: 16px;
+  --text-base: 18px;
+  --text-lg: 20px;
+  --text-xl: 22px;
+  --text-2xl: 24px;
+  --text-3xl: 28px;
+  --text-4xl: 32px;
+  --text-5xl: 48px;
+  --text-6xl: 52px;
+
+  /* Grid */
+  --grid-container: 100%;
+  --grid-sidebar: 100%;
+  --grid-gap: var(--space-base);
+  --grid-gap-between-blocks: var(--space-xl);
+
+  @media (--mq-laptop) {
+    --grid-container: 1260px;
+    --grid-gap: var(--space-xl);
+    --grid-gap-between-blocks: var(--space-2xl);
+  }
+
+  @media (--mq-desktop) {
+    --grid-container: 1918px;
+    --grid-gap: var(--space-xxl);
+  }
+
+}

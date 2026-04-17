@@ -1,0 +1,15 @@
+extends ../layouts/base
+
+block content
+
+  header(class="site-header" role="banner")
+    .site-shell
+      h1 🍅
+
+  main(class="site-main" role="main")
+    +blockSection({ heading: 'About us' })(class='is-highlighted')
+      .button-demo
+        +button({ label: "Attiva" })
+
+  footer(class="site-footer" role="contentinfo")
+    .site-shell

@@ -1,0 +1,57 @@
+/*
+// ----------------------------------
+// 🍅 Pummarola Button
+// ----------------------------------
+*/
+
+.button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 48px;
+  padding-inline: 20px;
+  border: var(--stroke-1) solid transparent;
+  border-radius: var(--radius-pill);
+  font-family: var(--font-body);
+  font-size: var(--text-sm);
+  font-weight: 600;
+  line-height: 1;
+  text-decoration: none;
+  cursor: pointer;
+  transition:
+    background-color 180ms ease,
+    border-color 180ms ease,
+    color 180ms ease,
+    transform 180ms ease;
+}
+
+.button:hover {
+  transform: translateY(-1px);
+}
+
+.button:disabled,
+.button[aria-disabled="true"] {
+  opacity: 0.45;
+  pointer-events: none;
+}
+
+.button--primary {
+  color: #fff;
+  background-color: #111;
+}
+
+.button--secondary {
+  color: #111;
+  border-color: #111;
+  background-color: transparent;
+}
+
+.button--small {
+  min-height: 40px;
+  padding-inline: 16px;
+  font-size: var(--text-xs);
+}
+
+.button--base {
+  min-height: 48px;
+}
