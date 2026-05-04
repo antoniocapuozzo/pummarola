@@ -5,9 +5,24 @@
 */
 
 :root {
+  /* Primitive colors */
+  --color-white: #ffffff;
+  --color-page: #f4efea;
+  --color-page-dark: #040822;
+  --color-surface-dark: #0a1a21;
+  --color-border-soft: #e6dfda;
+  --color-text-muted: #5a5a5a;
+  --color-text: #222222;
+  --color-text-strong: #1c1c1c;
+  --color-brand: #e05c39;
+  --color-brand-strong: #240707;
+  --color-accent: #e3d454;
+  --color-ink: #1c2144;
+  --color-ink-strong: #040822;
 
   /* Space (gap, margin, padding) */
   --space-2xs: 2px;
+  --space-3xs: 4px;
   --space-xs: 8px;
   --space-sm: 12px;
   --space-base: 16px;
@@ -16,12 +31,12 @@
   --space-xxl: 48px;
 
   /* Radius */
-  --raduys-2xs: 2px;
-  --raduys-xs: 8px;
-  --raduys-sm: 12px;
-  --raduys-base: 16px;
-  --raduys-lg: 24px;
-  --raduys-xl: 32px;
+  --radius-2xs: 2px;
+  --radius-xs: 8px;
+  --radius-sm: 12px;
+  --radius-base: 16px;
+  --radius-lg: 24px;
+  --radius-xl: 32px;
   --radius-circle: 50%;
   --radius-pill: 100px;
 
@@ -31,9 +46,12 @@
   --stroke-3: 3px;
 
   /* Typography (font-family, font-weight, line-height, letter-spacing) */
-  --font-body: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Helvetica Neue', sans-serif;
+  --font-sans: 'Manrope', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Helvetica Neue', sans-serif;
+  --font-mono: 'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, 'Liberation Mono', 'Courier New', monospace;
 
-  /* Typography (font-size) */
+  --font-heading: var(--font-sans);
+  --font-overtitle: var(--font-mono);
+
   --text-2xs: 12px;
   --text-xs: 14px;
   --text-sm: 16px;
@@ -45,17 +63,29 @@
   --text-4xl: 32px;
   --text-5xl: 48px;
   --text-6xl: 52px;
+  --text-7xl: 56px;
+
+  --weight-normal: 400;
+  --weight-medium: 500;
+  --weight-semibold: 600;
+  --weight-bold: 700;
+  --weight-extrabold: 800;
+
+  --leading-xs: 1.125;
+  --leading-sm: 1.2;
+  --leading-base: 1.5;
 
   /* Grid */
   --grid-container: 100%;
-  --grid-sidebar: 100%;
+  --grid-column: 100%;
   --grid-gap: var(--space-base);
   --grid-gap-between-blocks: var(--space-xl);
 
   @media (--mq-laptop) {
     --grid-container: 1260px;
+    --grid-column: 575px;
     --grid-gap: var(--space-xl);
-    --grid-gap-between-blocks: var(--space-2xl);
+    --grid-gap-between-blocks: var(--space-xxl);
   }
 
   @media (--mq-desktop) {

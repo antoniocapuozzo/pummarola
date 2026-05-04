@@ -1,0 +1,21 @@
+/*
+// ----------------------------------
+// 🍅 Pummarola Icon
+// ----------------------------------
+*/
+
+.site-icon {
+  display: block;
+  width: 1em;
+  height: 1em;
+  stroke-width: 0;
+  stroke: currentColor;
+  fill: currentColor;
+}
+
+.site-icons {
+  position: absolute;
+  width: 0;
+  height: 0;
+  overflow: hidden;
+}

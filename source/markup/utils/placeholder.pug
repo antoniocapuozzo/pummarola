@@ -1,9 +1,31 @@
 //- Placeholder mixin.
 //- @author Pummarola
 //- Usage: +placeholder(200, 120)
+//- Usage: +placeholder({ width: 1918, height: 822, mobileWidth: 720, mobileHeight: 1280, alt: 'Hero image' })
 
-mixin placeholder(width, height)
-  - var count = Math.round(Math.random() * 1000) + 1
+mixin placeholder(widthOrProps, height)
+  - var props = typeof widthOrProps === 'object' ? widthOrProps : { width: widthOrProps, height: height }
+  - var width = props.width || 200
+  - var desktopWidth = props.desktopWidth || width
+  - var desktopHeight = props.desktopHeight || props.height || 120
+  - var mobileWidth = props.mobileWidth || desktopWidth
+  - var mobileHeight = props.mobileHeight || desktopHeight
+  - var href = props.href || null
+  - var alt = props.alt || ''
+  - var loading = props.loading || 'lazy'
+  - var count = props.seed || Math.round(Math.random() * 1000) + 1
+  - var desktopSrc = 'https://picsum.photos/' + desktopWidth + '/' + desktopHeight + '/?random&' + count
+  - var mobileSrc = 'https://picsum.photos/' + mobileWidth + '/' + mobileHeight + '/?random&' + count
 
   figure
-    img(src='https://picsum.photos/' + width + '/' + height + '/?random&' + count, width=width, height=height, alt='' loading='lazy')
+    if href
+      a(href=href)
+        picture
+          if mobileWidth !== desktopWidth || mobileHeight !== desktopHeight
+            source(media='(min-width: 768px)' srcset=desktopSrc width=desktopWidth height=desktopHeight)
+          img(src=mobileSrc, width=mobileWidth, height=mobileHeight, alt=alt, loading=loading)
+    else
+      picture
+        if mobileWidth !== desktopWidth || mobileHeight !== desktopHeight
+          source(media='(min-width: 768px)' srcset=desktopSrc width=desktopWidth height=desktopHeight)
+        img(src=mobileSrc, width=mobileWidth, height=mobileHeight, alt=alt, loading=loading)

@@ -4,8 +4,110 @@
 // ----------------------------------
 */
 
+/* Mixin: grid-container
+ * Definisce un contenitore flessibile per la griglia con larghezza massima e gutter.
+ */
+
 @mixin --grid-container() {
   max-width: var(--grid-container);
   margin-inline: auto;
-  padding-inline: var(--grid-gap);
+}
+
+/* Mixin: --theme-light
+ * Mappa la palette primitiva ai token semantici del tema light.
+ * I componenti dovrebbero leggere questi token, non i colori grezzi.
+ */
+
+@mixin --theme-light() {
+  --color-bg-page: var(--color-page);
+  --color-bg-surface: var(--color-white);
+
+  --color-fg: var(--color-text);
+  --color-fg-muted: var(--color-text-muted);
+  --color-fg-strong: var(--color-text-strong);
+  --color-fg-inverse: var(--color-white);
+
+  --color-border: var(--color-border-soft);
+
+  --color-action: var(--color-brand);
+  --color-action-strong: var(--color-brand-strong);
+
+  --color-highlight: var(--color-accent);
+  --color-decorative: var(--color-ink);
+  --color-decorative-strong: var(--color-ink-strong);
+
+  /* Overlay */
+  --color-surface-overlay: linear-gradient(to top,
+      rgba(0, 0, 0, 0.95) 0%,
+      rgba(0, 0, 0, 0.6) 40%,
+      rgba(0, 0, 0, 0.25) 70%,
+      rgba(0, 0, 0, 0.1) 85%,
+      transparent 100%);
+}
+
+/* Mixin: --theme-dark
+ * Esempio minimale: cambia solo i due sfondi principali.
+ */
+
+@mixin --theme-dark() {
+  --color-bg-page: var(--color-page-dark);
+  --color-bg-surface: var(--color-surface-dark);
+}
+
+/* Mixin: heading
+ * Applica lo stile tipografico base dei titoli.
+ * La dimensione resta locale al componente, cosi` puo` cambiare con i breakpoint.
+ */
+
+@mixin --heading() {
+  font-family: var(--font-heading);
+  font-weight: var(--weight-extrabold);
+  line-height: var(--leading-sm);
+  font-style: normal;
+  /* letter-spacing: -.3px; */
+  letter-spacing: -1.50px;
+}
+
+/* Mixin: overtitle
+ * Applica lo stile tipografico base degli overtitle.
+ * La dimensione resta locale al componente, cosi` puo` cambiare con i breakpoint.
+ */
+
+@mixin --overtitle() {
+  --overtitle-color: #7f7f7f;
+  --overtitle-dot-color: #d9d9d9;
+  font-family: var(--font-overtitle);
+  font-weight: var(--weight-bold);
+  font-size: var(--text-2xs);
+  text-transform: uppercase;
+  color: var(--overtitle-color);
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-xs);
+
+  &::before {
+    content: "";
+    display: inline-block;
+    background-color: var(--overtitle-dot-color);
+    width: var(--space-xs);
+    height: var(--space-xs);
+    border-radius: var(--radius-circle);
+  }
+
+}
+
+/* Mixin: overlay-panel
+ * Posiziona un pannello in overlay sul fondo del media
+ * e applica il surface inverso del tema.
+ */
+
+@mixin --overlay-panel() {
+  position: absolute;
+  inset-inline: 0;
+  inset-block-end: 0;
+  z-index: 1;
+  padding: var(--grid-gap);
+  color: var(--color-fg-inverse);
+  background: var(--color-surface-overlay);
+  backdrop-filter: blur(1px);
 }

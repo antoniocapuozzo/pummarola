@@ -1,5 +1,6 @@
 #!/usr/bin/env bun
 
+import { execFileSync } from "node:child_process";
 import { mkdir, readFile, readdir, rm, stat, writeFile } from "node:fs/promises";
 import path from "node:path";
 import * as p from "@clack/prompts";
@@ -33,6 +34,45 @@ const pagesDir = path.join(root, "source/markup/pages");
 const scriptsEntryPath = path.join(root, "source/scripts/app.ts");
 
 const [, , command, ...rawArgs] = process.argv;
+
+function restoreTerminalState(): void {
+  if (!process.stdin.isTTY) {
+    return;
+  }
+
+  try {
+    process.stdin.setRawMode?.(false);
+  } catch {
+    // Ignore TTY reset failures and try stty as a fallback.
+  }
+
+  try {
+    execFileSync("stty", ["sane"], {
+      stdio: ["inherit", "ignore", "ignore"],
+    });
+  } catch {
+    // Ignore fallback failures so terminal repair never blocks command exit.
+  }
+}
+
+let terminalCleanupRegistered = false;
+
+function registerTerminalCleanup(): void {
+  if (terminalCleanupRegistered) {
+    return;
+  }
+
+  terminalCleanupRegistered = true;
+
+  const cleanupAndExit = (code: number) => {
+    restoreTerminalState();
+    process.exit(code);
+  };
+
+  process.once("SIGINT", () => cleanupAndExit(130));
+  process.once("SIGTERM", () => cleanupAndExit(143));
+  process.once("exit", restoreTerminalState);
+}
 
 function toKebabCase(value: string): string {
   return value
@@ -109,6 +149,8 @@ async function listFiles(directory: string, extension: string): Promise<string[]
 }
 
 async function runScript(scriptName: "__dev" | "__build" | "__preview"): Promise<void> {
+  registerTerminalCleanup();
+
   const child = Bun.spawn(["bun", "run", scriptName], {
     cwd: root,
     stdin: "inherit",
@@ -117,6 +159,7 @@ async function runScript(scriptName: "__dev" | "__build" | "__preview"): Promise
   });
 
   const exitCode = await child.exited;
+  restoreTerminalState();
 
   if (exitCode !== 0) {
     process.exit(exitCode);
@@ -267,9 +310,10 @@ async function createComponent(nameArg?: string): Promise<void> {
   await mkdir(componentStylesDir, { recursive: true });
 
   const componentName = toPascalCase(name);
-  const markupTemplate = `//- ${componentName} component.\n//- @author Pummarola\n//- Usage: +${mixinName}({ label: '${componentName}' })\n\nmixin ${mixinName}(props = {})\n  - var label = props.label || '${componentName}'\n\n  .${name}&attributes(attributes)\n    if block\n      block\n    else\n      = label\n`;
+  const componentContentClassName = `${name}-content`;
+  const markupTemplate = `//- ${componentName} component.\n//- @author Pummarola\n//- Usage: +${mixinName}()\n//- Usage: +${mixinName}({ label: '${componentName}' })\n//- Usage: +${mixinName}()(class='is-highlighted')\n//- Usage: +${mixinName}()(data-ui='${name}')\n\nmixin ${mixinName}(props = {})\n  - var label = props.label || '${componentName}'\n\n  .${name}&attributes(attributes)\n    .${componentContentClassName}\n      if block\n        block\n      else\n        = label\n`;
 
-  const styleTemplate = `/*\n// ----------------------------------\n// 🍅 Pummarola ${componentName}\n// ----------------------------------\n*/\n\n.${name} {\n  display: block;\n}\n`;
+  const styleTemplate = `/*\n// ----------------------------------\n// 🍅 Pummarola ${componentName}\n// ----------------------------------\n*/\n\n.${name} {\n  display: block;\n}\n\n.${componentContentClassName} {\n  display: block;\n}\n`;
 
   await writeFile(markupPath, markupTemplate);
   await writeFile(stylePath, styleTemplate);
@@ -342,9 +386,9 @@ async function createSection(nameArg?: string): Promise<void> {
   await mkdir(sectionsDir, { recursive: true });
   await mkdir(sectionStylesDir, { recursive: true });
 
-  const markupTemplate = `//- ${sectionName} section.\n//- @author Pummarola\n//- Usage: +${mixinName}()\n//- Usage: +${mixinName}({ heading: '${sectionName}' })\n//- Usage: +${mixinName}({ heading: '${sectionName}' })(class='is-highlighted')\n\nmixin ${mixinName}(props = {})\n  - var heading = props.heading || 'Title'\n\n  section.${sectionClassName}&attributes(attributes)\n    .site-shell\n      .${sectionTitleClassName}\n        h1= heading\n\n      if block\n        block\n`;
+  const markupTemplate = `//- ${sectionName} section.\n//- @author Pummarola\n//- Usage: +${mixinName}()\n//- Usage: +${mixinName}({ heading: '${sectionName}' })\n//- Usage: +${mixinName}({ heading: '${sectionName}' })(class='is-highlighted')\n//- Usage: +${mixinName}({ heading: '${sectionName}' })(data-section='${name}')\n\nmixin ${mixinName}(props = {})\n  - var heading = props.heading || 'Title'\n\n  section.${sectionClassName}&attributes(attributes)\n    .site-shell\n      header.${sectionClassName}-header\n        .${sectionTitleClassName}\n          h1= heading\n\n      .${sectionClassName}-content\n        if block\n          block\n`;
 
-  const styleTemplate = `/*\n// ----------------------------------\n// 🍅 Pummarola ${sectionName} Section\n// ----------------------------------\n*/\n\n.${sectionClassName} {\n  padding-block: var(--space-xxl);\n}\n\n.${sectionTitleClassName} {\n  margin-bottom: var(--space-lg);\n}\n`;
+  const styleTemplate = `/*\n// ----------------------------------\n// 🍅 Pummarola ${sectionName} Section\n// ----------------------------------\n*/\n\n.${sectionClassName} {\n  padding-block: var(--space-xxl);\n}\n\n.${sectionClassName}-header {\n  margin-bottom: var(--space-lg);\n}\n\n.${sectionTitleClassName} {\n  display: block;\n}\n\n.${sectionClassName}-content {\n  display: block;\n}\n`;
 
   await writeFile(markupPath, markupTemplate);
   await writeFile(stylePath, styleTemplate);
