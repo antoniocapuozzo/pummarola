@@ -183,7 +183,7 @@ async function promptName(kind: ArtifactKind, initial?: string): Promise<string>
               ? "hero"
               : "marketing",
       validate(value) {
-        return value.trim().length === 0 ? `Please enter a ${kind} name.` : undefined;
+        return value?.trim().length === 0 ? `Please enter a ${kind} name.` : undefined;
       },
     }),
   );
