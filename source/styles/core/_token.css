@@ -7,73 +7,28 @@
 :root {
   /* Primitive colors */
   --color-white: #ffffff;
-  --color-page: #f4efea;
-  --color-page-dark: #040822;
-  --color-surface-dark: #0a1a21;
-  --color-border-soft: #e6dfda;
-  --color-text-muted: #5a5a5a;
-  --color-text: #222222;
-  --color-text-strong: #1c1c1c;
-  --color-brand: #e05c39;
-  --color-brand-strong: #240707;
-  --color-accent: #e3d454;
-  --color-ink: #1c2144;
-  --color-ink-strong: #040822;
+  --color-dark: #1e1e1e;
+  --color-border: #d1d1d1;
 
-  /* Space (gap, margin, padding) */
-  --space-2xs: 2px;
-  --space-3xs: 4px;
-  --space-xs: 8px;
-  --space-sm: 12px;
+  --background: oklch(15.5% 0.004 285);
+
+  /* Space */
+  --space-half: 8px;
   --space-base: 16px;
-  --space-lg: 24px;
-  --space-xl: 32px;
-  --space-xxl: 48px;
+  --space-double: 24px;
+  --space-middle: 32px;
+  --space-triple: 48px;
 
   /* Radius */
-  --radius-2xs: 2px;
-  --radius-xs: 8px;
-  --radius-sm: 12px;
-  --radius-base: 16px;
-  --radius-lg: 24px;
-  --radius-xl: 32px;
-  --radius-circle: 50%;
-  --radius-pill: 100px;
+  --radius-base: 20px;
 
-  /* Stroke (border-width) */
-  --stroke-1: 1px;
-  --stroke-2: 2px;
-  --stroke-3: 3px;
+  /* Stroke */
+  --stroke-base: 1px;
+  --stroke-double: 2px;
 
-  /* Typography (font-family, font-weight, line-height, letter-spacing) */
-  --font-sans: 'Manrope', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Helvetica Neue', sans-serif;
-  --font-mono: 'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, 'Liberation Mono', 'Courier New', monospace;
-
-  --font-heading: var(--font-sans);
-  --font-overtitle: var(--font-mono);
-
-  --text-2xs: 12px;
-  --text-xs: 14px;
-  --text-sm: 16px;
-  --text-base: 18px;
-  --text-lg: 20px;
-  --text-xl: 22px;
-  --text-2xl: 24px;
-  --text-3xl: 28px;
-  --text-4xl: 32px;
-  --text-5xl: 48px;
-  --text-6xl: 52px;
-  --text-7xl: 56px;
-
-  --weight-normal: 400;
-  --weight-medium: 500;
-  --weight-semibold: 600;
-  --weight-bold: 700;
-  --weight-extrabold: 800;
-
-  --leading-xs: 1.125;
-  --leading-sm: 1.2;
-  --leading-base: 1.5;
+  /* Typography */
+  --font-sans: 'Geist', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Helvetica Neue', sans-serif;
+  --font-mono: 'Geist Mono', ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, 'Liberation Mono', 'Courier New', monospace;
 
   /* Grid */
   --grid-container: 100%;

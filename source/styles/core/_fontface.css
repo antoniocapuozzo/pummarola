@@ -5,17 +5,17 @@
 */
 
 @font-face {
-  font-family: 'Manrope';
-  src: url('../../fonts/manrope/Manrope[wght].ttf') format('truetype');
-  font-weight: 200 800;
+  font-family: 'Geist';
+  src: url('../../fonts/geist/Geist[wght].ttf') format('truetype');
+  font-weight: 100 900;
   font-style: normal;
   font-display: swap;
 }
 
 @font-face {
-  font-family: 'JetBrains Mono';
-  src: url('../../fonts/jetbrains-mono/JetBrainsMono-Bold.ttf') format('truetype');
-  font-weight: 700;
+  font-family: 'Geist Mono';
+  src: url('../../fonts/geist-mono/GeistMono[wght].ttf') format('truetype');
+  font-weight: 100 900;
   font-style: normal;
   font-display: swap;
 }

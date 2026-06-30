@@ -3,7 +3,7 @@ include ../utils/icon
 include ../utils/ipsum
 include ../utils/loop
 include ../utils/placeholder
-
+include ../components/toast
 
 doctype html
 html(lang='en')
@@ -12,7 +12,8 @@ html(lang='en')
     meta(name='viewport' content='width=device-width, initial-scale=1.0')
     block title
       title Pummarola | 1.0
-    link(rel='stylesheet' href='/source/styles/app.css')
+    block style
+      link(rel='stylesheet' href='/source/styles/app.css')
   body(itemscope='' itemtype='http://schema.org/WebPage')
     +iconSprite()
     block content

@@ -104,6 +104,32 @@ function toOutputPath(pagePath: string): string {
   return path.join(projectRoot, relativePage.replace(/\.pug$/, ".html"));
 }
 
+function toInputName(outputPath: string): string {
+  const relativeOutput = path.relative(projectRoot, outputPath);
+  const parsedOutput = path.parse(relativeOutput);
+  const name = path.join(parsedOutput.dir, parsedOutput.name);
+
+  return name.split(path.sep).filter(Boolean).join("-") || "index";
+}
+
+async function collectHtmlInputs(): Promise<Record<string, string>> {
+  try {
+    await stat(pagesDir);
+  } catch {
+    return {};
+  }
+
+  const pages = await listPugPages(pagesDir);
+
+  return Object.fromEntries(
+    pages.map((pagePath) => {
+      const outputPath = toOutputPath(pagePath);
+
+      return [toInputName(outputPath), outputPath];
+    }),
+  );
+}
+
 async function buildMarkup(): Promise<string[]> {
   try {
     await stat(pagesDir);
@@ -153,6 +179,7 @@ function pugPagesPlugin(): Plugin {
   let buildQueue = Promise.resolve();
   let generatedOutputs = new Set<string>();
   let cleanupRegistered = false;
+  let command: "serve" | "build" | undefined;
 
   const queueBuild = async (onDone?: () => void) => {
     buildQueue = buildQueue
@@ -210,7 +237,27 @@ function pugPagesPlugin(): Plugin {
 
   return {
     name: "pummarola-pug-pages",
+    async config(config, environment) {
+      if (environment.command !== "build") {
+        return;
+      }
+
+      await buildMarkup();
+
+      return {
+        build: {
+          rollupOptions: {
+            input: {
+              ...((config.build?.rollupOptions?.input as Record<string, string> | undefined) || {}),
+              ...(await collectHtmlInputs()),
+            },
+          },
+        },
+      };
+    },
     configResolved(config) {
+      command = config.command;
+
       if (config.command === "serve") {
         // Cleanup is needed only in dev, where HTML entries are temporary.
         registerCleanup(queueCleanup);
@@ -258,6 +305,11 @@ function pugPagesPlugin(): Plugin {
           server.ws.send({ type: "full-reload" });
         });
       });
+    },
+    async closeBundle() {
+      if (command === "build") {
+        await queueCleanup();
+      }
     },
   };
 }

@@ -8,8 +8,7 @@ Built to stay lightweight: no legacy task runner, no heavy framework assumptions
 
 ### Setup
 
-Make sure you have `Bun` installed.
-The project declares Bun as its expected package manager in `package.json`.
+Make sure you have `Bun` installed. The project declares `bun@1.3.5` as its expected package manager and requires Bun `>=1.3.5`.
 
 Clone the repo and enter the project:
 
@@ -61,8 +60,9 @@ After install, Pummarola registers its local CLI automatically, so the `pummarol
 - Put layout styles in `source/styles/layouts` when using generated layouts
 - Put source fonts in `source/fonts`
 - Use `public` only for static files that should be copied as-is, such as favicons, social images or manifest files
+- During development and build, Pummarola compiles Pug pages into temporary HTML entries that Vite can serve or bundle, then cleans them up
 - Build output is generated in `dist`
-- Production assets use relative paths, so `dist/index.html` can also be opened directly when needed
+- Production assets use relative paths, but production HTML should still be tested through `pummarola preview` or another static web server because Vite outputs JavaScript modules
 
 ## Core Utilities
 
@@ -70,18 +70,44 @@ The default markup starts intentionally clean: `source/markup/pages/index.pug` p
 
 - `source/markup/utils/icon.pug` exposes `+iconSprite()` and `+icon(...)` for inline SVG sprite usage
 - `source/markup/utils/placeholder.pug` supports fixed and responsive placeholder images with optional links and alt text
-- `source/styles/core/_fontface.css` registers the bundled Manrope and JetBrains Mono fonts
+- `source/styles/core/_fontface.css` registers the bundled Geist and Geist Mono fonts
 - `source/styles/core/_icon.css` provides the base `.site-icon` and hidden `.site-icons` sprite styles
 
-## VSCode Snippets
+## Global and Page Assets
 
-Pummarola now ships with project-local VSCode snippets in `.vscode/pummarola.code-snippets`.
+Pummarola keeps shared assets global and lets each page append only what it needs.
 
-- `comm` inserts the shared multi-line CSS comment block
-- `med` inserts a breakpoint with Pummarola custom media tokens such as `--mq-tablet`
-- `cl` inserts a quick `console.log(...)` in JavaScript and TypeScript files
+- `source/styles/app.css` is the shared stylesheet entry for core foundations, reusable components and styles used across multiple pages
+- `source/scripts/app.ts` is the shared script entry for behavior that should run everywhere
+- Page-only styles can live in `source/styles/pages`, for example `source/styles/pages/start.css`
+- Page-only scripts can live in `source/scripts/pages`, for example `source/scripts/pages/start.ts`
+- Page templates can append their own CSS and JavaScript through the `style` and `script` blocks exposed by `source/markup/layouts/base.pug`
 
-The workspace also maps `*.css` files to `postcss` in `.vscode/settings.json`, so PostCSS-oriented snippets and editor support behave more naturally with Pummarola's syntax.
+Example:
+
+```pug
+block append style
+  link(rel='stylesheet' href='/source/styles/pages/start.css')
+
+block append script
+  script(type='module' src='/source/scripts/pages/start.ts')
+```
+
+During production builds, every Pug page in `source/markup/pages` is registered as a Vite HTML entry automatically. Shared assets are bundled once, while page-specific CSS and JavaScript are emitted as separate assets when needed.
+
+## Dependency Baseline
+
+Current package versions are intentionally kept modern and minimal:
+
+- `@clack/prompts` `^1.6.0`
+- `@types/bun` `^1.3.14`
+- `@types/node` `^26.0.1`
+- `@types/pug` `^2.0.10`
+- `postcss` `^8.5.16`
+- `postcss-preset-env` `^11.3.2`
+- `pug` `^3.0.4`
+- `typescript` `^6.0.3`
+- `vite` `^8.1.0`
 
 ## Stack
 
@@ -100,15 +126,20 @@ The workspace also maps `*.css` files to `postcss` in `.vscode/settings.json`, s
 ├── public
 ├── source
 │   ├── fonts
-│   │   ├── jetbrains-mono
-│   │   └── manrope
+│   │   ├── geist
+│   │   └── geist-mono
+│   ├── cli
 │   ├── markup
+│   │   ├── components
 │   │   ├── layouts
 │   │   ├── pages
 │   │   └── utils
 │   ├── scripts
+│   │   └── pages
 │   └── styles
-│       └── core
+│       ├── components
+│       ├── core
+│       └── pages
 ├── package.json
 ├── postcss.config.js
 └── tsconfig.json
@@ -122,4 +153,4 @@ This documentation is still evolving alongside the boilerplate itself.
 
 `public` can stay in the project even if it is empty. It is optional during development, but useful as a conventional home for static assets that do not belong in `source`.
 
-Last update: 04/05/2026
+Last update: 30/06/2026

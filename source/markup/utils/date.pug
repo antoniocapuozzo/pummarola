@@ -1,9 +1,14 @@
 //- Date mixin.
 //- @author Pummarola
 //- Usage: +date('1986-09-21')
+//- Usage: +date('1986-09-21', 'it-IT')
 
-mixin date(input)
-  - var date = new Date(input)
-  - var months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December']
+mixin date(input, locale)
+  - var isDateOnly = typeof input === 'string' && /^\d{4}-\d{2}-\d{2}$/.test(input)
+  - var value = input instanceof Date ? input : new Date(isDateOnly ? input + 'T00:00:00' : input)
+  - var isValidDate = !Number.isNaN(value.getTime())
 
-  time(datetime=JSON.parse(JSON.stringify(date)))&attributes(attributes)=months[date.getMonth()] + ' ' + date.getDate() + ', ' + date.getFullYear()
+  if isValidDate
+    - var formatter = new Intl.DateTimeFormat(locale || 'en', { month: 'long', day: 'numeric', year: 'numeric' })
+    - var datetime = isDateOnly ? input : value.toISOString()
+    time(datetime=datetime)&attributes(attributes)= formatter.format(value)

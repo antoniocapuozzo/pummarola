@@ -4,7 +4,8 @@
 
 mixin loop(count)
   - var n = 0
+  - var total = Math.max(0, Number(count) || 0)
 
-  while n < count
+  while n < total
     block
     - n++

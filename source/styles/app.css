@@ -10,6 +10,22 @@
 @import "core/_breakpoint.css";
 @import "core/_reset.css";
 @import "core/_icon.css";
+@import "components/_toast.css";
+
+.site-main {
+  position: relative;
+  overflow-x: clip;
+  min-height: 100dvh;
+
+  &:before {
+    content: '';
+    background-image: radial-gradient(oklch(1 0 0 / 0.1) 1px, transparent 1px);
+    background-size: var(--space-base) var(--space-base);
+    pointer-events: none;
+    position: absolute;
+    inset: 0;
+  }
+}
 
 /*
 // ----------------------------------

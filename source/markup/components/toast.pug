@@ -1,0 +1,16 @@
+//- Toast component.
+//- @author Pummarola
+//- Usage: +toast()
+//- Usage: +toast({ label: 'Toast' })
+//- Usage: +toast()(class='is-highlighted')
+//- Usage: +toast()(data-ui='toast')
+
+mixin toast(props = {})
+  - var label = props.label || 'Toast'
+
+  .toast&attributes(attributes)
+    .toast-content
+      if block
+        block
+      else
+        = label

@@ -1,0 +1,13 @@
+extends ../layouts/base
+
+block append style
+  link(rel='stylesheet' href='/source/styles/pages/start.css')
+
+block content
+  main(class="site-main" role="main")
+    .site-shell
+      h1 Start
+      +toast({ label: 'Shared toast from start' })
+
+block append script
+  script(type='module' src='/source/scripts/pages/start.ts')

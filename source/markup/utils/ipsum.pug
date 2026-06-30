@@ -5,6 +5,8 @@
 //- Usage: +lipsum(5, 'characters')
 
 mixin lipsum(items, type)
+  - var amount = Math.max(0, Number(items) || 0)
+  - var outputType = type || 'words'
   - var source = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."
   - var minWords = 2
   - var maxWords = 18
@@ -17,32 +19,31 @@ mixin lipsum(items, type)
   - var getNumberOfItems = function(min, max) { var iteration = 3; var random = function(min, max) { return Math.random() * (max - min) }; var result; for (var i = 0; i < iteration; i++) { if (result === undefined) { result = random(min, max) } else { result += random(min, max) } } return Math.floor(result / iteration) + min }
   - var generateSentence = function() { var sentence = ''; var words = getNumberOfItems(minWords, maxWords); for (var i = 0; i < words; i++) { sentence += wordArray[Math.floor(Math.random() * wordArray.length)]; if (i === words - 1) { if (Math.random() < questionChance) { sentence += '? ' } else { sentence += '. ' } } else if (Math.random() < commaChance) { sentence += ', ' } else { sentence += ' ' } } return firstToUpperCase(sentence) }
 
-  if type == 'words'
-    - var words = ''
-    - for (var i = 0; i < items; i++) {
-    -   words += wordArray[Math.floor(Math.random() * wordArray.length)]
-    -   if (i === 0) words = firstToUpperCase(words)
-    -   words += ' '
+  if outputType == 'words'
+    - var words = []
+    - for (var i = 0; i < amount; i++) {
+    -   words.push(wordArray[Math.floor(Math.random() * wordArray.length)])
     - }
-    = words
-  else if type == 'characters'
+    - var wordText = firstToUpperCase(words.join(' '))
+    = wordText
+  else if outputType == 'characters'
     - var characters = ''
-    while characters.length < items
+    while characters.length < amount
       - characters += wordArray[Math.floor(Math.random() * wordArray.length)]
     - characters = firstToUpperCase(characters)
-    if characters.length > items
-      = characters.substring(0, items)
+    if characters.length > amount
+      = characters.substring(0, amount)
     else
       = characters
-  else if type == 'paragraphs'
-    - for (var i = 0; i < items; i++) {
+  else if outputType == 'paragraphs'
+    - for (var i = 0; i < amount; i++) {
     -   var sentences = getNumberOfItems(minSentences, maxSentences)
       p
         - for (var k = 0; k < sentences; k++) {
           = generateSentence()
         - }
     - }
-  else if type == 'sentences'
-    - for (var i = 0; i < items; i++) {
+  else if outputType == 'sentences'
+    - for (var i = 0; i < amount; i++) {
       = generateSentence()
     - }

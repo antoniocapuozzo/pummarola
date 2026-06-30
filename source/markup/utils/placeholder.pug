@@ -13,19 +13,20 @@ mixin placeholder(widthOrProps, height)
   - var href = props.href || null
   - var alt = props.alt || ''
   - var loading = props.loading || 'lazy'
+  - var decoding = props.decoding || 'async'
   - var count = props.seed || Math.round(Math.random() * 1000) + 1
-  - var desktopSrc = 'https://picsum.photos/' + desktopWidth + '/' + desktopHeight + '/?random&' + count
-  - var mobileSrc = 'https://picsum.photos/' + mobileWidth + '/' + mobileHeight + '/?random&' + count
+  - var desktopSrc = 'https://picsum.photos/' + desktopWidth + '/' + desktopHeight + '?random=' + count
+  - var mobileSrc = 'https://picsum.photos/' + mobileWidth + '/' + mobileHeight + '?random=' + count
 
-  figure
+  figure&attributes(attributes)
     if href
       a(href=href)
         picture
           if mobileWidth !== desktopWidth || mobileHeight !== desktopHeight
             source(media='(min-width: 768px)' srcset=desktopSrc width=desktopWidth height=desktopHeight)
-          img(src=mobileSrc, width=mobileWidth, height=mobileHeight, alt=alt, loading=loading)
+          img(src=mobileSrc, width=mobileWidth, height=mobileHeight, alt=alt, loading=loading, decoding=decoding)
     else
       picture
         if mobileWidth !== desktopWidth || mobileHeight !== desktopHeight
           source(media='(min-width: 768px)' srcset=desktopSrc width=desktopWidth height=desktopHeight)
-        img(src=mobileSrc, width=mobileWidth, height=mobileHeight, alt=alt, loading=loading)
+        img(src=mobileSrc, width=mobileWidth, height=mobileHeight, alt=alt, loading=loading, decoding=decoding)
